@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel | GJ Fadezz</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+    <!-- Corner Link -->
+    <a href="index.html" class="corner-link">View Site</a>
+
+    <!-- Admin Section -->
+    <section class="admin-section">
+        <div class="container">
+            <div class="admin-header">
+                <h1>GJ Fadezz Admin</h1>
+            </div>
+
+            <!-- Tab Navigation -->
+            <div class="admin-tabs">
+                <button class="tab-btn active" data-tab="appointments">Manage Appointments</button>
+                <button class="tab-btn" data-tab="availability">Change Times</button>
+                <button class="tab-btn" data-tab="schedule">Weekly Schedule</button>
+                <button class="tab-btn" data-tab="analytics">Analytics</button>
+            </div>
+
+            <!-- Tab Content: Appointments -->
+            <div class="tab-content active" id="appointments-tab">
+                <div class="admin-stats">
+                    <div class="stat-card">
+                        <span class="stat-label">Pending</span>
+                        <span class="stat-value" id="pendingCount">0</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-label">Accepted</span>
+                        <span class="stat-value" id="acceptedCount">0</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-label">Total</span>
+                        <span class="stat-value" id="totalCount">0</span>
+                    </div>
+                </div>
+
+                <div class="appointments-filters">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="pending">Pending</button>
+                    <button class="filter-btn" data-filter="accepted">Accepted</button>
+                    <button class="filter-btn" data-filter="declined">Declined</button>
+                    <button class="filter-btn" data-filter="past">Past Appointments</button>
+                </div>
+                
+                <div class="appointments-list" id="appointmentsList">
+                    <!-- Appointments will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Tab Content: Availability -->
+            <div class="tab-content" id="availability-tab">
+                <!-- Calendar Preview Section -->
+                <div class="availability-calendar-view">
+                    <div class="calendar-header">
+                        <button class="calendar-nav-btn" id="prevMonthAvailability" style="display: none;">&larr;</button>
+                        <div>
+                            <h3 id="currentMonthYearAvailability">Availability Calendar</h3>
+                            <p class="calendar-subtitle">Click a day to edit its availability</p>
+                        </div>
+                        <button class="calendar-nav-btn" id="nextMonthAvailability" style="display: none;">&rarr;</button>
+                    </div>
+                    <div class="calendar-grid" id="calendarPreview">
+                        <!-- Full month calendar will be populated by JavaScript -->
+                    </div>
+                    <!-- Expanded day editor will appear here -->
+                    <div id="expandedDayEditor" style="display: none;"></div>
+                </div>
+
+                <!-- Time Slot Picker Modal -->
+                <div id="timeSlotModal" class="time-range-modal" style="display: none;">
+                    <div class="modal-overlay" onclick="adminPanel.closeTimeSlotModal()"></div>
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4>Add Time Slot</h4>
+                            <button class="btn-close-modal" onclick="adminPanel.closeTimeSlotModal()">×</button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="time-picker-group">
+                                <label>Select Time</label>
+                                <div class="time-picker">
+                                    <select id="timeHour" class="time-hour">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9" selected>9</option>
+                                        <option value="10">10</option>
+                                        <option value="11">11</option>
+                                        <option value="12">12</option>
+                                    </select>
+                                    <span>:</span>
+                                    <select id="timeMinute" class="time-minute">
+                                        <option value="00" selected>00</option>
+                                        <option value="05">05</option>
+                                        <option value="10">10</option>
+                                        <option value="15">15</option>
+                                        <option value="20">20</option>
+                                        <option value="25">25</option>
+                                        <option value="30">30</option>
+                                        <option value="35">35</option>
+                                        <option value="40">40</option>
+                                        <option value="45">45</option>
+                                        <option value="50">50</option>
+                                        <option value="55">55</option>
+                                    </select>
+                                    <select id="timeAMPM" class="time-ampm">
+                                        <option value="AM" selected>AM</option>
+                                        <option value="PM">PM</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-actions">
+                            <button class="btn-cancel" onclick="adminPanel.closeTimeSlotModal()">Cancel</button>
+                            <button class="btn-add-range-modal" onclick="adminPanel.confirmAddTimeSlot()">Add Time Slot</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab Content: Analytics -->
+            <div class="tab-content" id="analytics-tab">
+                <!-- Fake Data Mode Toggle -->
+                <div class="fake-data-toggle-container">
+                    <div class="fake-data-controls">
+                        <label class="fake-data-toggle-label">
+                            <span>Enable Fake Data Mode (Testing)</span>
+                            <label class="toggle-switch large">
+                                <input type="checkbox" id="fakeDataToggle">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </label>
+                        <button class="btn-regenerate" id="regenerateFakeDataBtn" style="display: none;">Regenerate Fake Data</button>
+                    </div>
+                    <p class="fake-data-note">When enabled, displays sample data for testing. Does not affect your real data.</p>
+                    <div class="fake-data-banner" id="fakeDataBanner" style="display: none;">
+                        <span class="banner-icon">⚠</span>
+                        <span>Fake Data Mode Active - Showing test data only</span>
+                    </div>
+                </div>
+
+                <!-- Analytics Filters -->
+                <div class="analytics-filters-container">
+                    <div class="filter-group">
+                        <label>Client Search:</label>
+                        <div class="client-search-container">
+                            <input type="text" id="clientSearchInput" placeholder="Search by client name or email..." class="filter-input">
+                            <select id="clientFilterSelect" class="filter-select">
+                                <option value="">All Clients</option>
+                            </select>
+                            <button class="btn-clear-filter" id="clearClientFilter" style="display: none;">Clear</button>
+                        </div>
+                    </div>
+                    <div class="filter-group">
+                        <label>Date Range:</label>
+                        <div class="date-range-buttons">
+                            <button class="date-range-btn" data-range="this-week">This Week</button>
+                            <button class="date-range-btn" data-range="this-month">This Month</button>
+                            <button class="date-range-btn active" data-range="last-30">Last 30 Days</button>
+                            <button class="date-range-btn" data-range="custom">Custom</button>
+                        </div>
+                        <div class="custom-date-range" id="customDateRange" style="display: none;">
+                            <input type="date" id="customStartDate" class="filter-input">
+                            <span>to</span>
+                            <input type="date" id="customEndDate" class="filter-input">
+                            <button class="btn-apply-small" id="applyCustomRange">Apply</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="analytics-container">
+                    <!-- Side Menu -->
+                    <div class="analytics-sidebar">
+                        <h3>Analytics Menu</h3>
+                        <nav class="analytics-nav">
+                            <button class="analytics-nav-btn active" data-view="time-slots">Popular/Least Popular Time Slots</button>
+                            <button class="analytics-nav-btn" data-view="revenue">Revenue Tracker</button>
+                            <button class="analytics-nav-btn" data-view="retention">Client Retention Rate</button>
+                            <button class="analytics-nav-btn" data-view="no-shows">No-Shows & Cancellations</button>
+                        </nav>
+                    </div>
+
+                    <!-- Analytics Content -->
+                    <div class="analytics-content">
+                        <!-- Time Slots View -->
+                        <div class="analytics-view active" id="time-slots-view">
+                            <h2>Popular & Least Popular Time Slots</h2>
+                            <div class="chart-container">
+                                <canvas id="timeSlotsChart"></canvas>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="dayOfWeekChart"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Revenue Tracker View -->
+                        <div class="analytics-view" id="revenue-view">
+                            <h2>Revenue Tracker</h2>
+                            <div class="date-range-selector">
+                                <label>Date Range:</label>
+                                <input type="date" id="revenueStartDate">
+                                <span>to</span>
+                                <input type="date" id="revenueEndDate">
+                                <button class="btn-apply" id="applyRevenueRange">Apply</button>
+                            </div>
+                            <div class="revenue-stats">
+                                <div class="revenue-stat-card">
+                                    <span class="revenue-label">Total Revenue</span>
+                                    <span class="revenue-value" id="totalRevenue">$0.00</span>
+                                </div>
+                                <div class="revenue-stat-card">
+                                    <label>Expenses:</label>
+                                    <input type="number" id="expensesInput" placeholder="0.00" step="0.01" min="0">
+                                </div>
+                                <div class="revenue-stat-card">
+                                    <span class="revenue-label">Gross Profit</span>
+                                    <span class="revenue-value" id="grossProfit">$0.00</span>
+                                </div>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="revenueChart"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Retention Rate View -->
+                        <div class="analytics-view" id="retention-view">
+                            <h2>Client Retention Rate</h2>
+                            <div class="retention-stats">
+                                <div class="retention-stat-card">
+                                    <span class="retention-label">Retention Rate</span>
+                                    <span class="retention-value" id="retentionRate">0%</span>
+                                </div>
+                                <div class="retention-stat-card">
+                                    <span class="retention-label">Total Clients</span>
+                                    <span class="retention-value" id="totalClients">0</span>
+                                </div>
+                                <div class="retention-stat-card">
+                                    <span class="retention-label">Returning Clients</span>
+                                    <span class="retention-value" id="returningClients">0</span>
+                                </div>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="retentionChart"></canvas>
+                            </div>
+                            <div class="clients-list-container">
+                                <h3>Client List</h3>
+                                <div class="clients-list" id="clientsList">
+                                    <!-- Clients will be populated by JavaScript -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- No-Shows View -->
+                        <div class="analytics-view" id="no-shows-view">
+                            <h2>No-Shows & Cancellations</h2>
+                            <div class="no-shows-stats">
+                                <div class="no-shows-stat-card">
+                                    <span class="no-shows-label">Total No-Shows</span>
+                                    <span class="no-shows-value" id="totalNoShows">0</span>
+                                </div>
+                                <div class="no-shows-stat-card">
+                                    <span class="no-shows-label">Total Cancellations</span>
+                                    <span class="no-shows-value" id="totalCancellations">0</span>
+                                </div>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="noShowsChart"></canvas>
+                            </div>
+                            <div class="no-shows-list-container">
+                                <h3>No-Shows & Cancellations List</h3>
+                                <div class="no-shows-list" id="noShowsList">
+                                    <!-- List will be populated by JavaScript -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab Content: Weekly Schedule -->
+            <div class="tab-content" id="schedule-tab">
+                <!-- Week Overview View -->
+                <div class="week-overview-view" id="weekOverviewView">
+                    <div class="weekly-schedule-container">
+                        <div class="week-header">
+                            <button class="week-nav-btn" id="prevWeek">&larr; Previous Week</button>
+                            <h2 id="currentWeekDisplay">Weekly Schedule</h2>
+                            <button class="week-nav-btn" id="nextWeek">Next Week &rarr;</button>
+                        </div>
+                        <div class="day-cards-grid" id="dayCardsGrid">
+                            <!-- Day cards will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Day Detail View -->
+                <div class="day-detail-view" id="dayDetailView" style="display: none;">
+                    <div class="weekly-schedule-container">
+                        <div class="day-detail-header">
+                            <button class="back-to-week-btn" id="backToWeekBtn">&larr; Back to Week</button>
+                            <h2 id="dayDetailHeader">Day Schedule</h2>
+                        </div>
+                        <div class="day-detail-timeline" id="dayDetailTimeline">
+                            <!-- Single day timeline will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/admin.js"></script>
+    <script src="js/analytics.js"></script>
+</body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointments | GJ Fadezz</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <h1>GJ Fadezz</h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Homepage Hero Banner Section -->
+    <section id="home" class="hero-banner">
+        <div class="hero-banner-overlay"></div>
+        <div class="hero-banner-image">
+            <img src="assets/hero-banner.jpg" alt="GJ Fadezz Barber" class="hero-banner-img">
+        </div>
+        
+        <!-- Tab Navigation -->
+        <div class="home-tabs-container">
+            <div class="home-tabs-nav">
+                <button class="home-tab-btn active" data-tab="welcome">Welcome</button>
+                <button class="home-tab-btn" data-tab="blend-book">GJz Blend Book</button>
+            </div>
+            
+            <!-- Welcome Tab Content -->
+            <div class="home-tab-content active" id="welcome-tab">
+                <div class="hero-banner-content">
+                    <h1 class="hero-banner-title">Book Now with GJ Fadezz</h1>
+                    <div class="hero-banner-text">
+                        <p><strong>I specialize in clean fades, sharp tapers, beard work, and razor-fresh lineups that hit different. Every session is personal, precise, and built around your style. No rush, no shortcuts — just skill, passion, and good energy in the chair.</strong></p>
+                        <p><strong>Come through, level up your look, and leave the chair feeling like a new you.</strong></p>
+                        <p><strong>Book your appointment today - fresh fades don't wait.</strong></p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- GJz Blend Book Tab Content -->
+            <div class="home-tab-content" id="blend-book-tab">
+                <div class="blend-book-container">
+                    <h2 class="blend-book-title">GJz Blend Book</h2>
+                    <p class="blend-book-subtitle">Showcasing fresh cuts and clean fades</p>
+                    <div class="haircut-gallery" id="haircut-gallery">
+                        <div class="haircut-item">
+                            <img src="Fade book/IMG_0834.jpeg" alt="Haircut">
+                        </div>
+                        <div class="haircut-item">
+                            <div class="haircut-placeholder">
+                                <span>Haircut Image</span>
+                            </div>
+                        </div>
+                        <div class="haircut-item">
+                            <div class="haircut-placeholder">
+                                <span>Haircut Image</span>
+                            </div>
+                        </div>
+                        <div class="haircut-item">
+                            <div class="haircut-placeholder">
+                                <span>Haircut Image</span>
+                            </div>
+                        </div>
+                        <div class="haircut-item">
+                            <div class="haircut-placeholder">
+                                <span>Haircut Image</span>
+                            </div>
+                        </div>
+                        <div class="haircut-item">
+                            <div class="haircut-placeholder">
+                                <span>Haircut Image</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="container">
+            <div class="services-list">
+                <div class="service-card">
+                    <div class="service-info">
+                        <h3 class="service-title">Haircut</h3>
+                        <p class="service-description">Crisp fades, sharp edges, and smooth razor work that hits different. Step in the chair and walk out looking fresh, fearless, and photo-ready. No rush, no shortcuts. Just straight skill.</p>
+                        <div class="service-meta">
+                            <span class="service-duration">45 mins</span>
+                            <span class="service-price">$30.00</span>
+                        </div>
+                    </div>
+                    <button class="btn-book" data-service="Haircut" data-price="30.00" data-duration="45">Book</button>
+                </div>
+                <div class="service-card">
+                    <div class="service-info">
+                        <h3 class="service-title">Haircut & Design</h3>
+                        <p class="service-description">I specialize in clean fades, sharp line-ups, and personalized cuts that match your look and lifestyle. Every appointment includes attention to detail, professional grooming, and a focus on the look you want to achieve. Lock in your time and leave the chair confident, fresh, and razor-sharp.</p>
+                        <div class="service-meta">
+                            <span class="service-duration">45 mins</span>
+                            <span class="service-price">$35.00</span>
+                        </div>
+                    </div>
+                    <button class="btn-book" data-service="Haircut & Design" data-price="35.00" data-duration="45">Book</button>
+                </div>
+                <div class="service-card">
+                    <div class="service-info">
+                        <h3 class="service-title">Haircut & Beard</h3>
+                        <p class="service-description">From fades to tapers to beard clean-ups, I take my time to make sure you walk out looking fresh and feeling confident. I care about the details and the vibe — good cuts, good convo, good energy.</p>
+                        <div class="service-meta">
+                            <span class="service-duration">45 mins</span>
+                            <span class="service-price">$40.00</span>
+                        </div>
+                    </div>
+                    <button class="btn-book" data-service="Haircut & Beard" data-price="40.00" data-duration="45">Book</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2>Contact Us</h2>
+                <p class="section-subtitle">Get in touch with us</p>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>Visit Us</h3>
+                    <p>123 Main Street<br>City, State ZIP Code</p>
+                    <h3>Hours</h3>
+                    <p>Sunday: Closed<br>Monday: 1:30 PM – 9:00 PM<br>Tuesday: 1:30 PM – 9:00 PM<br>Wednesday: Closed<br>Thursday: 1:30 PM – 9:00 PM<br>Friday: 1:30 PM – 9:00 PM<br>Saturday: Closed</p>
+                    <h3>Phone</h3>
+                    <p>(XXX) XXX-XXXX</p>
+                </div>
+                <div class="contact-form">
+                    <form>
+                        <input type="text" placeholder="Your Name" required>
+                        <input type="email" placeholder="Your Email" required>
+                        <input type="tel" placeholder="Your Phone">
+                        <textarea placeholder="Your Message" rows="5" required></textarea>
+                        <button type="submit">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>GJ Fadezz</h2>
+                </div>
+                <div class="footer-social">
+                    <a href="https://www.instagram.com/gj.fadezz" target="_blank" rel="noopener noreferrer" class="social-link">Instagram</a>
+                </div>
+                <div class="footer-text">
+                    <p>&copy; 2024 GJ Fadezz. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

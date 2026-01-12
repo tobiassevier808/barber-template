@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Confirmation | GJ Fadezz</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/confirmation.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <h1><a href="index.html" style="text-decoration: none; color: inherit;">GJ Fadezz</a></h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#services">Services</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Confirmation Section -->
+    <section class="confirmation-section">
+        <div class="container">
+            <div class="confirmation-content">
+                <div class="confirmation-icon">
+                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                    </svg>
+                </div>
+                
+                <h1 class="confirmation-title">Thanks for booking</h1>
+                
+                <div class="confirmation-message">
+                    <p>Your appointment request is pending. We'll notify you when it's accepted.</p>
+                </div>
+
+                <div class="appointment-details-card">
+                    <h3>Appointment Details</h3>
+                    <div class="detail-row">
+                        <span class="detail-label">Service:</span>
+                        <span class="detail-value" id="confirmationService">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Date:</span>
+                        <span class="detail-value" id="confirmationDate">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Time:</span>
+                        <span class="detail-value" id="confirmationTime">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Duration:</span>
+                        <span class="detail-value" id="confirmationDuration">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Price:</span>
+                        <span class="detail-value" id="confirmationPrice">-</span>
+                    </div>
+                </div>
+
+                <div class="next-steps-section">
+                    <h2>Next steps</h2>
+                    <div class="next-steps-content">
+                        <p>You'll receive a confirmation notification once your appointment is accepted.</p>
+                    </div>
+                </div>
+
+                <div class="payment-section">
+                    <h2>Payment</h2>
+                    <div class="payment-content">
+                        <p class="payment-due">Due at appointment</p>
+                        <p class="payment-note">Payment is due at your appointment.</p>
+                    </div>
+                </div>
+
+                <div class="cancellation-section">
+                    <h2>Cancellation policy</h2>
+                    <div class="cancellation-content">
+                        <p>Please cancel or reschedule before your appointment begins. See full policy</p>
+                    </div>
+                </div>
+
+                <div class="confirmation-actions">
+                    <a href="index.html" class="btn-back-home">Back to Home</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>GJ Fadezz</h2>
+                </div>
+                <div class="footer-social">
+                    <a href="https://www.instagram.com/gj.fadezz" target="_blank" rel="noopener noreferrer" class="social-link">Instagram</a>
+                </div>
+                <div class="footer-text">
+                    <p>&copy; 2024 GJ Fadezz. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+    <script src="js/confirmation.js"></script>
+</body>
+</html>
+
