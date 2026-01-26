@@ -78,6 +78,10 @@ class BookingSystem {
             // Backup: Load from localStorage
             const stored = localStorage.getItem('availability');
             this.availability = stored ? JSON.parse(stored) : {};
+            
+            // Jump to first available week before rendering
+            this.jumpToFirstAvailableWeek();
+            
             this.renderCalendar();
             return;
         }
@@ -106,6 +110,9 @@ class BookingSystem {
             // Also fetch existing appointments to check for booked slots
             await this.fetchExistingAppointments();
             
+            // Jump to first available week before rendering
+            this.jumpToFirstAvailableWeek();
+            
             this.renderCalendar();
             this.hideLoadingState();
         } catch (error) {
@@ -114,12 +121,20 @@ class BookingSystem {
                 // Fallback to localStorage
                 const stored = localStorage.getItem('availability');
                 this.availability = stored ? JSON.parse(stored) : {};
+                
+                // Jump to first available week before rendering
+                this.jumpToFirstAvailableWeek();
+                
                 this.renderCalendar();
                 this.hideLoadingState();
                 this.showMessage('Cannot connect to server. Using cached availability. Some times may be unavailable.', 'error');
             } else {
                 // Server responded but with error - still try to render
                 this.availability = {};
+                
+                // Jump to first available week before rendering
+                this.jumpToFirstAvailableWeek();
+                
                 this.renderCalendar();
                 this.hideLoadingState();
                 this.showMessage('Error loading availability. Please refresh the page.', 'error');
@@ -214,6 +229,43 @@ class BookingSystem {
         const availableSlots = allSlots.filter(slot => !this.isTimeSlotBooked(dateStr, slot));
         
         return availableSlots;
+    }
+
+    // Find the first date with availability
+    findFirstAvailableDate() {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        
+        // Get all dates with availability
+        const availableDates = Object.keys(this.availability)
+            .map(dateStr => {
+                const date = new Date(dateStr + 'T00:00:00');
+                return { dateStr, date };
+            })
+            .filter(({ dateStr, date }) => {
+                // Must be today or in the future
+                if (date < today) return false;
+                
+                // Must have available time slots
+                const timeSlots = this.getAvailableTimeSlots(dateStr);
+                return timeSlots.length > 0;
+            })
+            .sort((a, b) => a.date - b.date); // Sort by date ascending
+        
+        // Return the first available date, or null if none found
+        return availableDates.length > 0 ? availableDates[0].date : null;
+    }
+
+    // Jump to the week containing the first available date
+    jumpToFirstAvailableWeek() {
+        const firstAvailableDate = this.findFirstAvailableDate();
+        
+        if (firstAvailableDate) {
+            // Set currentDate to the first available date
+            this.currentDate = new Date(firstAvailableDate);
+            this.currentDate.setHours(0, 0, 0, 0);
+        }
+        // If no available dates found, keep showing current week
     }
 
     init() {

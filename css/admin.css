@@ -2588,7 +2588,23 @@
     }
 
     .admin-stats {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.5rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .stat-card {
+        padding: 0.75rem 0.5rem;
+        gap: 0.25rem;
+    }
+    
+    .stat-label {
+        font-size: 0.7rem;
+        letter-spacing: 0.3px;
+    }
+    
+    .stat-value {
+        font-size: 1.5rem;
     }
 
     .appointment-card {
@@ -4006,6 +4022,26 @@
 @media (max-width: 480px) {
     .admin-header h1 {
         font-size: 1.5rem;
+    }
+    
+    .admin-stats {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.35rem;
+        margin-bottom: 1rem;
+    }
+    
+    .stat-card {
+        padding: 0.625rem 0.4rem;
+        gap: 0.2rem;
+    }
+    
+    .stat-label {
+        font-size: 0.65rem;
+        letter-spacing: 0.2px;
+    }
+    
+    .stat-value {
+        font-size: 1.25rem;
     }
     
     .appointment-card {

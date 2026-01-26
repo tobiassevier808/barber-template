@@ -32,10 +32,10 @@ class AnalyticsPanel {
         // Filter by includeInAnalytics
         sourceData = sourceData.filter(apt => apt.includeInAnalytics !== false);
         
-        // Filter by client if selected
+        // Filter by client if selected (using normalized phone)
         if (this.selectedClient) {
             sourceData = sourceData.filter(apt => 
-                apt.customer.email.toLowerCase() === this.selectedClient.toLowerCase()
+                this.normalizePhone(apt.customer.phone) === this.normalizePhone(this.selectedClient)
             );
         }
         
@@ -127,6 +127,12 @@ class AnalyticsPanel {
         const ampm = hour >= 12 ? 'PM' : 'AM';
         const displayHour = hour % 12 || 12;
         return `${displayHour}:${minutes} ${ampm}`;
+    }
+
+    // Normalize phone number to digits only for comparison
+    normalizePhone(phone) {
+        if (!phone) return '';
+        return phone.replace(/\D/g, ''); // Remove all non-digit characters
     }
 
     init() {
@@ -374,20 +380,23 @@ class AnalyticsPanel {
         const clients = {};
         allAppts.forEach(apt => {
             if (apt.includeInAnalytics !== false) {
-                const email = apt.customer.email.toLowerCase();
-                if (!clients[email]) {
-                    clients[email] = apt.customer.name;
+                const normalizedPhone = this.normalizePhone(apt.customer.phone);
+                if (normalizedPhone && !clients[normalizedPhone]) {
+                    clients[normalizedPhone] = {
+                        name: apt.customer.name,
+                        phone: apt.customer.phone
+                    };
                 }
             }
         });
         
         // Update dropdown
         clientFilterSelect.innerHTML = '<option value="">All Clients</option>';
-        Object.entries(clients).sort((a, b) => a[1].localeCompare(b[1])).forEach(([email, name]) => {
+        Object.entries(clients).sort((a, b) => a[1].name.localeCompare(b[1].name)).forEach(([normalizedPhone, client]) => {
             const option = document.createElement('option');
-            option.value = email;
-            option.textContent = `${name} (${email})`;
-            if (this.selectedClient === email) {
+            option.value = normalizedPhone;
+            option.textContent = `${client.name} (${client.phone})`;
+            if (this.normalizePhone(this.selectedClient) === normalizedPhone) {
                 option.selected = true;
             }
             clientFilterSelect.appendChild(option);
@@ -663,19 +672,21 @@ class AnalyticsPanel {
 
         const analyticsAppts = this.getAnalyticsAppointments().filter(apt => apt.status === 'accepted');
         
-        // Group by customer email
+        // Group by customer phone (normalized)
         const clients = {};
         analyticsAppts.forEach(apt => {
-            const email = apt.customer.email.toLowerCase();
-            if (!clients[email]) {
-                clients[email] = {
+            const normalizedPhone = this.normalizePhone(apt.customer.phone);
+            if (!normalizedPhone) return; // Skip if no phone
+            
+            if (!clients[normalizedPhone]) {
+                clients[normalizedPhone] = {
                     name: apt.customer.name,
                     email: apt.customer.email,
                     phone: apt.customer.phone,
                     appointments: []
                 };
             }
-            clients[email].appointments.push({
+            clients[normalizedPhone].appointments.push({
                 date: apt.date,
                 time: apt.time,
                 service: apt.service

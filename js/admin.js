@@ -1113,12 +1113,6 @@ class AdminPanel {
             // Make ALL days clickable to show editor (not just add time slot)
             dayEl.style.cursor = 'pointer';
             dayEl.addEventListener('click', (e) => {
-                // Don't toggle if click is inside the expanded editor content
-                const editorContent = dayEl.querySelector('.day-editor-expanded-content');
-                if (editorContent && editorContent.contains(e.target)) {
-                    return; // Ignore clicks inside the editor
-                }
-                
                 // Find the day cell and show editor
                 const dayCell = Array.from(document.querySelectorAll('.calendar-day')).find(cell => {
                     const cellDateStr = cell.getAttribute('data-date');
@@ -1258,9 +1252,17 @@ class AdminPanel {
         dayCell.classList.add('expanded');
         dayCell.appendChild(editorContainer);
         
-        // Prevent clicks inside editor from bubbling to day cell
+        // Prevent clicks on interactive elements from bubbling to day cell
+        // But allow clicks on the header/background to close the editor
         editorContainer.addEventListener('click', (e) => {
-            e.stopPropagation(); // Stop event from reaching day cell click handler
+            // Allow clicks to bubble if clicking on header or non-interactive areas
+            const isInteractiveElement = e.target.closest('button, input, select, textarea, .time-slot-item, .copy-day-checkbox-item');
+            const isHeader = e.target.closest('.expanded-editor-header');
+            
+            if (isInteractiveElement && !isHeader) {
+                e.stopPropagation(); // Stop event from reaching day cell click handler
+            }
+            // If clicking on header or non-interactive area, let it bubble to close the editor
         });
         
         // Trigger animation by forcing reflow
@@ -1305,6 +1307,7 @@ class AdminPanel {
 
     // Cancel day editor
     cancelDayEditor() {
+        this.expandedDate = null; // Clear expanded state
         this.renderAvailabilityCalendar();
     }
 

@@ -25,3 +25,6 @@ desktop.ini
 # Build files
 dist/
 build/
+
+*.pdf
+CRITERION_*.md
